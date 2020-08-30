@@ -5,24 +5,44 @@ type DrawCallback = (
     frameCount: number,
 ) => void;
 
-type CanvasOptions = {
+interface ICanvasConfig {
     context?: string;
+    canvasWillDraw?(): void;
+    canvasDidDraw?(): void;
+}
+
+const defaultConfig = {
+    context: '2d',
+    canvasWillDraw: () => {},
+    canvasDidDraw: () => {},
 };
 
-const useCanvas = (draw: DrawCallback, options: CanvasOptions = {}) => {
+const useCanvas = (
+    draw: DrawCallback,
+    config: ICanvasConfig = defaultConfig,
+) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const rafId = useRef<number>(0);
     const frameCount = useRef<number>(0);
 
+    const { context, canvasWillDraw, canvasDidDraw } = {
+        ...defaultConfig,
+        ...config,
+    };
+
     useEffect(() => {
         const canvas = canvasRef.current as HTMLCanvasElement;
-        const context = canvas.getContext(
-            options.context || '2d',
+        const ctx = canvas.getContext(
+            context || '2d',
         ) as CanvasRenderingContext2D;
 
         const render = () => {
             frameCount.current++;
-            draw(context, frameCount.current);
+
+            canvasWillDraw();
+            draw(ctx, frameCount.current);
+            canvasDidDraw();
+
             rafId.current = window.requestAnimationFrame(render);
         };
 
@@ -31,7 +51,7 @@ const useCanvas = (draw: DrawCallback, options: CanvasOptions = {}) => {
         return () => {
             cancelAnimationFrame(rafId.current);
         };
-    }, [draw, options.context]);
+    }, [draw, context, canvasWillDraw, canvasDidDraw]);
 
     return {
         canvasRef,
