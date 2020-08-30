@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { Canvas } from './styles';
-import useSnakeCanvas from '../hooks/useSnakeCanvas';
+import useCanvas from '../hooks/useCanvas';
+
+import draw from '../game';
 
 const SnakeBoard = () => {
-    const { canvasRef } = useSnakeCanvas();
+    const { canvasRef } = useCanvas(draw);
     return <Canvas ref={canvasRef} />;
 };
 
