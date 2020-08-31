@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Canvas = styled.canvas`
-    width: 300px;
-    height: 300px;
+    /* border: 1px solid; */
+    margin: 0 auto;
+    display: block;
 `;

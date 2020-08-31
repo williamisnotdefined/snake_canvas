@@ -43,7 +43,7 @@ const useCanvas = (
             draw(ctx, frameCount.current);
             canvasDidDraw();
 
-            rafId.current = window.requestAnimationFrame(render);
+            // rafId.current = requestAnimationFrame(render);
         };
 
         render();
@@ -59,3 +59,27 @@ const useCanvas = (
 };
 
 export default useCanvas;
+
+/*
+import getPixelRatio from '../helpers/getPixelRatio';
+
+const draw = (ctx: CanvasRenderingContext2D, frameCount: number) => {
+    const ratio = getPixelRatio(ctx);
+    const width = ctx.canvas.width * ratio;
+    const height = ctx.canvas.height * ratio;
+
+    ctx.canvas.style.width = `${width}px`;
+    ctx.canvas.style.height = `${height}px`;
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = 'lime';
+    ctx.fillRect(0, 0, 15, 15);
+
+    //ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+    //ctx.fillRect(30, 30, 50, 50);
+
+};
+
+export default draw;*/
