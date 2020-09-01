@@ -6,7 +6,6 @@ import handleSize from './handleSize';
     ((index % length) + length) % length; */
 
 const draw = (ctx: CanvasRenderingContext2D, frameCount: number) => {
-    //const { rows, columns, width, height } = handleSize(ctx);
     const { squareWidth, squareHeight, widthBoard, heightBoard } = handleSize(
         ctx,
     );
