@@ -1,4 +1,4 @@
-import getPixelRatio from '../helpers/getPixelRatio';
+import getPixelRatio from '@helpers/getPixelRatio';
 
 const getIndex = (index: number, length: number): number =>
     ((index % length) + length) % length;

@@ -1,9 +1,17 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
-import SnakeBoard from './SnakeBoard';
+import SnakeBoard from '@components/SnakeBoard';
 
-function App() {
-    return <SnakeBoard />;
-}
+import { GlobalStyle, theme } from '@styles';
+
+const App: React.FC = () => {
+    return (
+        <ThemeProvider theme={theme}>
+            <SnakeBoard />
+            <GlobalStyle />
+        </ThemeProvider>
+    );
+};
 
 export default App;
