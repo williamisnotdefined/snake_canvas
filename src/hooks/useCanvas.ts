@@ -43,7 +43,7 @@ const useCanvas = (
             draw(ctx, frameCount.current);
             canvasDidDraw();
 
-            // rafId.current = requestAnimationFrame(render);
+            rafId.current = requestAnimationFrame(render);
         };
 
         render();

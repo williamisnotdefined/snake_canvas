@@ -17,10 +17,12 @@ const SnakeBoard = () => {
     */
     const { canvasRef } = useCanvas(draw);
     const { width, height } = useWindowSize();
-    console.log(width, height);
+
+    const fixedWidth = Math.floor((width - 100) / 10) * 10;
+    const fixedHeight = Math.floor((height - 100) / 10) * 10;
 
     return (
-        <Canvas ref={canvasRef} width={width} height={height}>
+        <Canvas ref={canvasRef} width={fixedWidth} height={fixedHeight}>
             Unfortunally your navigator doesn't support this Game.
         </Canvas>
     );
