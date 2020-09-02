@@ -1,28 +1,22 @@
-import { PIECE } from './constants';
+import render from './render';
+import createKeyboardListener from './keyboardControls';
+import createGame from './game';
 
-import handleSize from './handleSize';
+const keyboard = createKeyboardListener(document);
 
-/* const getIndex = (index: number, length: number): number =>
-    ((index % length) + length) % length; */
+function Setup() {
+    const game = createGame();
 
-const draw = (ctx: CanvasRenderingContext2D, frameCount: number) => {
-    //const { rows, columns, width, height } = handleSize(ctx);
-    const { squareWidth, squareHeight, widthBoard, heightBoard } = handleSize(
-        ctx,
-    );
+    keyboard.registerPlayerId('1');
+    keyboard.subscribe(game.movePlayer);
 
-    ctx.fillStyle = 'black';
-
-    for (let i = 0; i < PIECE; i++) {
-        ctx.fillRect(i * squareWidth, 0, 1, heightBoard);
+    function draw(ctx: CanvasRenderingContext2D, frameCount: number) {
+        render(game.state, ctx, frameCount);
     }
 
-    for (let i = 0; i < PIECE; i++) {
-        ctx.fillRect(0, i * squareHeight, widthBoard, 1);
-    }
+    return { draw };
+}
 
-    ctx.fillStyle = 'lime';
-    ctx.fillRect(0, 0, squareWidth, squareHeight);
-};
+const { draw } = Setup();
 
-export default draw;
+export { draw };

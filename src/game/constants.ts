@@ -1,1 +1,2 @@
-export const PIECE = 25;
+export const PIECE = 18;
+export const TOTAL_PIECES = PIECE * PIECE;

@@ -1,5 +1,5 @@
 import getPixelRatio from '@helpers/getPixelRatio';
-import { PIECE } from './constants';
+import { PIECE } from '../constants';
 
 export default function handleSize(ctx: CanvasRenderingContext2D) {
     const ratio = getPixelRatio(ctx);
