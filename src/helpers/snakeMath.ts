@@ -17,3 +17,14 @@ export const getIndexByLine = (position: number, incrementor: number): number =>
 
     return nextPosition;
 };
+
+export const incrementSnakeBody = (snakeBody: Array<number>) => {
+    const snake = snakeBody;
+    const head = snake[snake.length - 1];
+    const tail = snake[0];
+
+    return {
+        snakeBody: snake.filter((piece) => piece !== tail),
+        head,
+    };
+};
