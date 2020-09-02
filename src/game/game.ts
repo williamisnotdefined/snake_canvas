@@ -1,43 +1,110 @@
-import { getIndexByColumn, getIndexByLine, incrementSnakeBody } from '@helpers/snakeMath';
-import { PIECE, TOTAL_PIECES } from './constants';
+import { getIndexByColumn, getIndexByLine, incrementSnakeBody, snakeSelfCollison } from '@helpers/snakeMath';
+import { PIECE, TOTAL_PIECES, SNAKE_DIRECTION } from './constants';
 
 export default function Game() {
     const state: IGameState = {
-        players: [{ id: '1', positions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], current: true }],
+        player: { id: '1', positions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], current: true },
+        enemies: [],
         fruits: [],
+        direction: SNAKE_DIRECTION.RIGHT,
     };
+
+    let intervalHandler: number;
+
+    function start() {
+        console.log('start called');
+        intervalHandler = setInterval(() => {
+            walk();
+        }, 100);
+    }
+
+    const walkMap = {
+        [SNAKE_DIRECTION.UP]: function (player: IPlayer) {
+            const snake = player.positions;
+            const { snakeBody, head } = incrementSnakeBody(snake);
+            const nextHead = getIndexByColumn(head - PIECE, TOTAL_PIECES);
+
+            if (snakeSelfCollison(snake, nextHead)) {
+                gameOver();
+            }
+
+            player.positions = [...snakeBody, nextHead];
+        },
+        [SNAKE_DIRECTION.RIGHT]: function (player: IPlayer) {
+            const snake = player.positions;
+            const { snakeBody, head } = incrementSnakeBody(snake);
+            const nextHead = getIndexByLine(head, 1);
+
+            if (snakeSelfCollison(snake, nextHead)) {
+                gameOver();
+            }
+
+            player.positions = [...snakeBody, nextHead];
+        },
+        [SNAKE_DIRECTION.DOWN]: function (player: IPlayer) {
+            const snake = player.positions;
+            const { snakeBody, head } = incrementSnakeBody(player.positions);
+            const nextHead = getIndexByColumn(head + PIECE, TOTAL_PIECES);
+
+            if (snakeSelfCollison(snake, nextHead)) {
+                gameOver();
+            }
+
+            player.positions = [...snakeBody, nextHead];
+        },
+        [SNAKE_DIRECTION.LEFT]: function (player: IPlayer) {
+            const snake = player.positions;
+            const { snakeBody, head } = incrementSnakeBody(snake);
+            const nextHead = getIndexByLine(head, -1);
+
+            if (snakeSelfCollison(snake, nextHead)) {
+                gameOver();
+            }
+
+            player.positions = [...snakeBody, nextHead];
+        },
+    };
+
+    function walk() {
+        const { player, direction } = state;
+        walkMap[direction](player);
+    }
 
     function movePlayer(command: IKeyboardCommand) {
         // notifyAll(command);
 
         const acceptedMoves: IAcceptedMoves = {
-            ArrowUp(player: IPlayer) {
-                const { snakeBody, head } = incrementSnakeBody(player.positions);
-                player.positions = [...snakeBody, getIndexByColumn(head - PIECE, TOTAL_PIECES)];
+            ArrowUp() {
+                state.direction = SNAKE_DIRECTION.UP;
             },
-            ArrowRight(player: IPlayer) {
-                const { snakeBody, head } = incrementSnakeBody(player.positions);
-                player.positions = [...snakeBody, getIndexByLine(head, 1)];
+            ArrowRight() {
+                state.direction = SNAKE_DIRECTION.RIGHT;
             },
-            ArrowDown(player: IPlayer) {
-                const { snakeBody, head } = incrementSnakeBody(player.positions);
-                player.positions = [...snakeBody, getIndexByColumn(head + PIECE, TOTAL_PIECES)];
+            ArrowDown() {
+                state.direction = SNAKE_DIRECTION.DOWN;
             },
-            ArrowLeft(player: IPlayer) {
-                const { snakeBody, head } = incrementSnakeBody(player.positions);
-                player.positions = [...snakeBody, getIndexByLine(head, -1)];
+            ArrowLeft() {
+                state.direction = SNAKE_DIRECTION.LEFT;
             },
         };
 
-        const { keyPressed, playerId } = command;
-        const player = state.players.find(({ id }) => id === playerId);
+        const { keyPressed } = command;
         const moveFunction = acceptedMoves[keyPressed];
 
-        if (player && moveFunction) {
-            moveFunction(player);
-            // checkForFruitCollision(playerId);
+        if (moveFunction) {
+            moveFunction();
         }
     }
 
-    return { state, movePlayer };
+    function gameOver() {
+        state.player = { id: '1', positions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], current: true };
+        state.direction = SNAKE_DIRECTION.RIGHT;
+    }
+
+    function destroy() {
+        console.log('destroy called');
+        clearInterval(intervalHandler);
+    }
+
+    return { state, movePlayer, start, destroy };
 }

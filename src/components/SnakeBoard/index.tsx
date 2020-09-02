@@ -3,12 +3,12 @@ import React from 'react';
 import useCanvas from '@hooks/useCanvas';
 import useWindowSize from '@hooks/useWindowSize';
 
-import { draw } from '@game';
+import { draw, canvasWillUnmount, canvasDidMount } from '@game';
 
 import { Canvas } from './styles';
 
 const SnakeBoard = () => {
-    const { canvasRef } = useCanvas(draw);
+    const { canvasRef } = useCanvas(draw, { canvasWillUnmount, canvasDidMount });
     const { width, height } = useWindowSize();
 
     const fixedWidth = Math.floor((width - 100) / 10) * 10;

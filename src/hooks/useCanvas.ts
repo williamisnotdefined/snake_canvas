@@ -1,40 +1,37 @@
 import { useEffect, useRef } from 'react';
 
-type DrawCallback = (
-    context: CanvasRenderingContext2D,
-    frameCount: number,
-) => void;
+type DrawCallback = (context: CanvasRenderingContext2D, frameCount: number) => void;
 
 interface ICanvasConfig {
     context?: string;
     canvasWillDraw?(): void;
     canvasDidDraw?(): void;
+    canvasWillUnmount?(): void;
+    canvasDidMount?(): void;
 }
 
 const defaultConfig = {
     context: '2d',
     canvasWillDraw: () => {},
     canvasDidDraw: () => {},
+    canvasWillUnmount: () => {},
+    canvasDidMount: () => {},
 };
 
-const useCanvas = (
-    draw: DrawCallback,
-    config: ICanvasConfig = defaultConfig,
-) => {
+const useCanvas = (draw: DrawCallback, config: ICanvasConfig = defaultConfig) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const rafId = useRef<number>(0);
     const frameCount = useRef<number>(0);
 
-    const { context, canvasWillDraw, canvasDidDraw } = {
+    const { context, canvasWillDraw, canvasDidDraw, canvasWillUnmount, canvasDidMount } = {
         ...defaultConfig,
         ...config,
     };
 
     useEffect(() => {
         const canvas = canvasRef.current as HTMLCanvasElement;
-        const ctx = canvas.getContext(
-            context || '2d',
-        ) as CanvasRenderingContext2D;
+        const ctx = canvas.getContext(context || '2d') as CanvasRenderingContext2D;
+        canvasDidMount();
 
         const render = () => {
             frameCount.current++;
@@ -49,9 +46,10 @@ const useCanvas = (
         render();
 
         return () => {
+            canvasWillUnmount();
             cancelAnimationFrame(rafId.current);
         };
-    }, [draw, context, canvasWillDraw, canvasDidDraw]);
+    }, [draw, context, canvasWillDraw, canvasDidDraw, canvasWillUnmount, canvasDidMount]);
 
     return {
         canvasRef,

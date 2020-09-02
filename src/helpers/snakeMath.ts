@@ -18,8 +18,7 @@ export const getIndexByLine = (position: number, incrementor: number): number =>
     return nextPosition;
 };
 
-export const incrementSnakeBody = (snakeBody: Array<number>) => {
-    const snake = snakeBody;
+export const incrementSnakeBody = (snake: Array<number>) => {
     const head = snake[snake.length - 1];
     const tail = snake[0];
 
@@ -27,4 +26,8 @@ export const incrementSnakeBody = (snakeBody: Array<number>) => {
         snakeBody: snake.filter((piece) => piece !== tail),
         head,
     };
+};
+
+export const snakeSelfCollison = (snake: Array<number>, nextHead: number) => {
+    return !!snake.find((piece) => piece === nextHead);
 };

@@ -3,12 +3,6 @@ type stateType = {
     playerId: string | null;
 };
 
-type commandType = {
-    type: string;
-    playerId: string | null;
-    keyPressed: string;
-};
-
 export default function createKeyboardListener(document: Document) {
     const state: stateType = {
         observers: [],
@@ -23,7 +17,7 @@ export default function createKeyboardListener(document: Document) {
         state.observers.push(observerFunction);
     }
 
-    function notifyAll(command: commandType) {
+    function notifyAll(command: IKeyboardCommand) {
         for (const observerFunction of state.observers) {
             observerFunction(command);
         }
@@ -34,9 +28,8 @@ export default function createKeyboardListener(document: Document) {
     function handleKeydown(event: KeyboardEvent) {
         const keyPressed = event.key;
 
-        const command: commandType = {
+        const command: IKeyboardCommand = {
             type: 'move-player',
-            playerId: state.playerId,
             keyPressed,
         };
 

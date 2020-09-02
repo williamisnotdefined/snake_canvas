@@ -5,16 +5,24 @@ interface IPlayer {
 }
 
 interface IGameState {
-    players: Array<IPlayer>;
+    player: IPlayer;
+    enemies: Array<IPlayer>;
     fruits: Array<number>;
+    direction: number;
 }
 
 interface IKeyboardCommand {
     type: string;
-    playerId: string;
     keyPressed: string;
 }
 
 interface IAcceptedMoves {
-    [key: string]: (player: IPlayer) => void;
+    [key: string]: () => void;
+}
+
+interface SnakeDirections {
+    ['UP']: number;
+    ['RIGHT']: number;
+    ['DOWN']: number;
+    ['LEFT']: number;
 }

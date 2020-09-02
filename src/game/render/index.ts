@@ -15,15 +15,13 @@ const render = (gameState: IGameState, ctx: CanvasRenderingContext2D, frameCount
         ctx.fillRect(0, i * squareHeight, widthBoard, 1);
     }
 
-    gameState.players.forEach((player) => {
-        player.positions.forEach((position) => {
-            ctx.fillStyle = player.current ? 'lime' : 'red';
+    gameState.player.positions.forEach((position) => {
+        ctx.fillStyle = gameState.player.current ? 'lime' : 'red';
 
-            const x = (position % PIECE) * squareWidth;
-            const y = Math.floor(position / PIECE) * squareHeight;
+        const x = (position % PIECE) * squareWidth;
+        const y = Math.floor(position / PIECE) * squareHeight;
 
-            ctx.fillRect(x, y, squareWidth, squareHeight);
-        });
+        ctx.fillRect(x, y, squareWidth, squareHeight);
     });
 };
 

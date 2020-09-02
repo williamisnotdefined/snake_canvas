@@ -10,13 +10,19 @@ function Setup() {
     keyboard.registerPlayerId('1');
     keyboard.subscribe(game.movePlayer);
 
+    function canvasDidMount() {
+        game.start();
+    }
+
+    function canvasWillUnmount() {
+        game.destroy();
+    }
+
     function draw(ctx: CanvasRenderingContext2D, frameCount: number) {
         render(game.state, ctx, frameCount);
     }
 
-    return { draw };
+    return { draw, canvasWillUnmount, canvasDidMount };
 }
 
-const { draw } = Setup();
-
-export { draw };
+export const { draw, canvasWillUnmount, canvasDidMount } = Setup();
