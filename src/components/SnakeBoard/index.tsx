@@ -15,7 +15,7 @@ const SnakeBoard = () => {
     const fixedHeight = Math.floor((height - 100) / 10) * 10;
 
     return (
-        <Canvas ref={canvasRef} width={fixedWidth} height={fixedHeight}>
+        <Canvas ref={canvasRef} data-width={fixedWidth} data-height={fixedHeight}>
             Unfortunally your navigator doesn't support this Game.
         </Canvas>
     );

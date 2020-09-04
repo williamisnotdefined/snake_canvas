@@ -3,7 +3,8 @@ import { PIECE } from '../constants';
 
 export default function handleSize(ctx: CanvasRenderingContext2D) {
     const ratio = getPixelRatio(ctx);
-    const { width: originalWidth, height: originalHeight } = ctx.canvas;
+    const originalWidth = Number(ctx.canvas.getAttribute('data-width'));
+    const originalHeight = Number(ctx.canvas.getAttribute('data-height'));
 
     const minorSize = Math.min(originalWidth, originalHeight);
 
