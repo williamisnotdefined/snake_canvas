@@ -3,21 +3,21 @@ import { PIECE } from '../constants';
 
 export default function handleSize(ctx: CanvasRenderingContext2D) {
     const ratio = getPixelRatio(ctx);
-    const { width: cWidth, height: cHeight } = ctx.canvas;
+    const { width: originalWidth, height: originalHeight } = ctx.canvas;
 
-    const squareWidth = Math.floor(cWidth / PIECE);
-    const squareHeight = Math.floor(cHeight / PIECE);
+    const minorSize = Math.min(originalWidth, originalHeight);
 
-    const widthBoard = squareWidth * PIECE * ratio;
-    const heightBoard = squareHeight * PIECE * ratio;
+    const boardSquare = Math.floor(minorSize / PIECE);
 
-    ctx.canvas.style.width = `${widthBoard}px`;
-    ctx.canvas.style.height = `${heightBoard}px`;
+    const boardSize = boardSquare * PIECE * ratio;
+
+    ctx.canvas.style.width = `${boardSize}px`;
+    ctx.canvas.style.height = `${boardSize}px`;
+    ctx.canvas.width = boardSize;
+    ctx.canvas.height = boardSize;
 
     return {
-        squareWidth,
-        squareHeight,
-        widthBoard,
-        heightBoard,
+        boardSquare,
+        boardSize,
     };
 }

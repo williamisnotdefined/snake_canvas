@@ -12,7 +12,6 @@ export default function Game() {
     let intervalHandler: number;
 
     function start() {
-        console.log('start called');
         intervalHandler = setInterval(() => {
             walk();
         }, 100);
@@ -102,7 +101,6 @@ export default function Game() {
     }
 
     function destroy() {
-        console.log('destroy called');
         clearInterval(intervalHandler);
     }
 
