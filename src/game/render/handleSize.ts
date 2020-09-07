@@ -11,11 +11,9 @@ export default function handleSize(ctx: CanvasRenderingContext2D): HandleSize {
     const originalWidth = Number(ctx.canvas.getAttribute('data-width'));
     const originalHeight = Number(ctx.canvas.getAttribute('data-height'));
 
-    const minorSize = Math.min(originalWidth, originalHeight);
+    const boardSize = Math.floor(Math.min(originalWidth, originalHeight) * ratio);
 
-    const boardSquare = Math.floor(minorSize / PIECE);
-
-    const boardSize = boardSquare * PIECE * ratio;
+    const boardSquare = boardSize / PIECE;
 
     ctx.canvas.style.width = `${boardSize}px`;
     ctx.canvas.style.height = `${boardSize}px`;
