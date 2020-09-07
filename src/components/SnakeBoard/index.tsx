@@ -7,8 +7,8 @@ import { draw, canvasWillUnmount, canvasDidMount } from '@game';
 
 import { Canvas } from './styles';
 
-const SnakeBoard = () => {
-    const { canvasRef } = useCanvas(draw, { canvasWillUnmount, canvasDidMount });
+const SnakeBoard: React.FC = () => {
+    const canvasRef = useCanvas(draw, { canvasWillUnmount, canvasDidMount });
     const { width, height } = useWindowSize();
 
     const fixedWidth = Math.floor((width - 100) / 10) * 10;
@@ -16,7 +16,7 @@ const SnakeBoard = () => {
 
     return (
         <Canvas ref={canvasRef} data-width={fixedWidth} data-height={fixedHeight}>
-            Unfortunally your navigator doesn't support this Game.
+            Unfortunally your navigator does not support this Game.
         </Canvas>
     );
 };

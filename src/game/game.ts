@@ -1,21 +1,15 @@
 import { getIndexByColumn, getIndexByLine, incrementSnakeBody, snakeSelfCollison } from '@helpers/snakeMath';
 import { PIECE, TOTAL_PIECES, SNAKE_DIRECTION } from './constants';
 
-export default function Game() {
+export default function Game(): IGame {
     const state: IGameState = {
-        player: { id: '1', positions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], current: true },
+        player: { id: '1', positions: [0], current: true },
         enemies: [],
         fruits: [],
         direction: SNAKE_DIRECTION.RIGHT,
     };
 
     let intervalHandler: number;
-
-    function start() {
-        intervalHandler = setInterval(() => {
-            walk();
-        }, 100);
-    }
 
     const walkMap = {
         [SNAKE_DIRECTION.UP]: function (player: IPlayer) {
@@ -64,12 +58,12 @@ export default function Game() {
         },
     };
 
-    function walk() {
+    function walk(): void {
         const { player, direction } = state;
         walkMap[direction](player);
     }
 
-    function movePlayer(command: IKeyboardCommand) {
+    function movePlayer(command: IKeyboardCommand): void {
         // notifyAll(command);
 
         const acceptedMoves: IAcceptedMoves = {
@@ -95,12 +89,18 @@ export default function Game() {
         }
     }
 
-    function gameOver() {
-        state.player = { id: '1', positions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], current: true };
+    function start(): void {
+        intervalHandler = setInterval(() => {
+            walk();
+        }, 100);
+    }
+
+    function gameOver(): void {
+        state.player = { id: '1', positions: [0], current: true };
         state.direction = SNAKE_DIRECTION.RIGHT;
     }
 
-    function destroy() {
+    function destroy(): void {
         clearInterval(intervalHandler);
     }
 

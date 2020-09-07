@@ -6,11 +6,11 @@ export default {
     // brandGrey10: '#F1F1F1', // light
     // brandGrey5: '#F7F7F8',
 
-    //brandBlue100: '#3E5BB2', // strong
+    // brandBlue100: '#3E5BB2', // strong
     brandBlue80: '#647BC1',
     brandBlue50: '#9EACD8', // medium
     brandBlue20: '#D8DEF0',
-    //brandBlue10: '#F0F2F9', // light
+    // brandBlue10: '#F0F2F9', // light
 
     white: '#FFFFFF',
 };

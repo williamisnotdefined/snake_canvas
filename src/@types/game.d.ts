@@ -1,3 +1,16 @@
+interface IGame {
+    state: IGameState;
+    movePlayer(command: IKeyboardCommand): void;
+    start(): void;
+    destroy(): void;
+}
+
+interface ISetup {
+    draw(ctx: CanvasRenderingContext2D): void;
+    canvasWillUnmount(): void;
+    canvasDidMount(): void;
+}
+
 interface IPlayer {
     positions: Array<number>;
     id: string;

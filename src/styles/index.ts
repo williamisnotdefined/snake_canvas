@@ -22,7 +22,7 @@ export const GlobalStyle = createGlobalStyle`
         -webkit-font-smoothing: antialiased !important;
         text-rendering: optimizeLegibility !important;
         font-family: 'Montserrat', sans-serif;
-        background-color: ${({ theme }) => colors.brandGrey20};
+        background-color: ${colors.white};
     }
 
     ul {

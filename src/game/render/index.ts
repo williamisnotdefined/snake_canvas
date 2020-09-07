@@ -2,7 +2,7 @@ import { PIECE } from '@game/constants';
 
 import handleSize from './handleSize';
 
-const render = (gameState: IGameState, ctx: CanvasRenderingContext2D, frameCount: number) => {
+const render = (gameState: IGameState, ctx: CanvasRenderingContext2D): void => {
     const { boardSquare, boardSize } = handleSize(ctx);
 
     ctx.clearRect(0, 0, boardSize, boardSize);

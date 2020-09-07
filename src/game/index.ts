@@ -4,22 +4,22 @@ import createGame from './game';
 
 const keyboard = createKeyboardListener(document);
 
-function Setup() {
+function Setup(): ISetup {
     const game = createGame();
 
     keyboard.registerPlayerId('1');
     keyboard.subscribe(game.movePlayer);
 
-    function canvasDidMount() {
+    function canvasDidMount(): void {
         game.start();
     }
 
-    function canvasWillUnmount() {
+    function canvasWillUnmount(): void {
         game.destroy();
     }
 
-    function draw(ctx: CanvasRenderingContext2D, frameCount: number) {
-        render(game.state, ctx, frameCount);
+    function draw(ctx: CanvasRenderingContext2D): void {
+        render(game.state, ctx);
     }
 
     return { draw, canvasWillUnmount, canvasDidMount };

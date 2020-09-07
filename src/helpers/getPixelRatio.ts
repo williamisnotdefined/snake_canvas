@@ -1,4 +1,4 @@
-const getPixelRatio = (context: CanvasRenderingContext2D) => {
+const getPixelRatio = (context: CanvasRenderingContext2D): number => {
     const backingStore =
         context.backingStorePixelRatio ||
         context.webkitBackingStorePixelRatio ||

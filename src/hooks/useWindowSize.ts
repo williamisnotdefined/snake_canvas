@@ -1,17 +1,19 @@
 import { useEffect, useState, useCallback } from 'react';
 
-const _getSize = () => ({
+type TwindowSize = { width: number; height: number };
+
+const _getSize = (): TwindowSize => ({
     width: window.innerWidth,
     height: window.innerHeight,
 });
 
-export default function useWindowSize() {
+export default function useWindowSize(): TwindowSize {
     const getSize = useCallback(() => _getSize(), []);
 
     const [windowSize, setWindowSize] = useState(getSize);
 
     useEffect(() => {
-        function handleResize() {
+        function handleResize(): void {
             setWindowSize(getSize());
         }
 

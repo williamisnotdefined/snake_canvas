@@ -1,5 +1,10 @@
 import { PIECE } from '@game/constants';
 
+interface IIncrementBody {
+    snakeBody: number[];
+    head: number;
+}
+
 export const getIndexByColumn = (index: number, length: number): number => ((index % length) + length) % length;
 
 export const getIndexByLine = (position: number, incrementor: number): number => {
@@ -11,14 +16,16 @@ export const getIndexByLine = (position: number, incrementor: number): number =>
 
     if (nextPosition > maxLineIndex) {
         return minLineIndex;
-    } else if (nextPosition < minLineIndex) {
+    }
+
+    if (nextPosition < minLineIndex) {
         return maxLineIndex;
     }
 
     return nextPosition;
 };
 
-export const incrementSnakeBody = (snake: Array<number>) => {
+export const incrementSnakeBody = (snake: Array<number>): IIncrementBody => {
     const head = snake[snake.length - 1];
     const tail = snake[0];
 
@@ -28,6 +35,6 @@ export const incrementSnakeBody = (snake: Array<number>) => {
     };
 };
 
-export const snakeSelfCollison = (snake: Array<number>, nextHead: number) => {
+export const snakeSelfCollison = (snake: Array<number>, nextHead: number): boolean => {
     return !!snake.find((piece) => piece === nextHead);
 };

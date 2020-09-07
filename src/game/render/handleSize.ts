@@ -1,7 +1,12 @@
 import getPixelRatio from '@helpers/getPixelRatio';
 import { PIECE } from '../constants';
 
-export default function handleSize(ctx: CanvasRenderingContext2D) {
+type HandleSize = {
+    boardSquare: number;
+    boardSize: number;
+};
+
+export default function handleSize(ctx: CanvasRenderingContext2D): HandleSize {
     const ratio = getPixelRatio(ctx);
     const originalWidth = Number(ctx.canvas.getAttribute('data-width'));
     const originalHeight = Number(ctx.canvas.getAttribute('data-height'));

@@ -1,9 +1,16 @@
+type observableCallbacks = (command: IKeyboardCommand) => void;
+
+interface ICreateKeyboardListener {
+    subscribe(observerFunction: observableCallbacks): void;
+    registerPlayerId(playerId: string): void;
+}
+
 type stateType = {
-    observers: Array<Function>;
+    observers: Array<observableCallbacks>;
     playerId: string | null;
 };
 
-export default function createKeyboardListener(document: Document) {
+export default function createKeyboardListener(document: Document): ICreateKeyboardListener {
     const state: stateType = {
         observers: [],
         playerId: null,
@@ -13,11 +20,11 @@ export default function createKeyboardListener(document: Document) {
         state.playerId = playerId;
     }
 
-    function subscribe(observerFunction: Function) {
+    function subscribe(observerFunction: observableCallbacks): void {
         state.observers.push(observerFunction);
     }
 
-    function notifyAll(command: IKeyboardCommand) {
+    function notifyAll(command: IKeyboardCommand): void {
         for (const observerFunction of state.observers) {
             observerFunction(command);
         }
@@ -25,7 +32,7 @@ export default function createKeyboardListener(document: Document) {
 
     document.addEventListener('keydown', handleKeydown);
 
-    function handleKeydown(event: KeyboardEvent) {
+    function handleKeydown(event: KeyboardEvent): void {
         const keyPressed = event.key;
 
         const command: IKeyboardCommand = {
